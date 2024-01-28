@@ -6,7 +6,8 @@ app = Flask(__name__)
 
 def calculateAge(birthDate):
   today = date.today()
-  age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
+  age = today.year - birthDate.year - ((today.month, today.day) <
+                                       (birthDate.month, birthDate.day))
 
   return age
 
