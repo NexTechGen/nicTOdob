@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>NIC2DOB</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
+{% extends 'main.html' %}
 
-  <body>
-    <h1>NIC 2 DOB</h1>
-    <form action="/getNic" method="get">
-      <input type="text" id="nic" name="nic" placeholder="Enter your NIC Number">
-      <button type="submit" name="getDOB" >Get DOB</button>
+{% block content %}
+<div class="mb-3">
+  <h1>NIC  DOB</h1>
+  <form action="/getNic" method="get">
+    <input id="nic" name="nic" class="form-control" placeholder="Enter your NIC Number"> <br>
+      <button type="submit" class="btn btn-primary btn-lg" >Get DOB</button>
     </form>
-    
-        <h1>Year: {{ year }}</h1>
-        <h1>Gender: {{ gen }}</h1>
+</div>
 
-  </body>
-</html>
+  <div class="out">
+        <h1 id="yyy">Year: {{ year }}</h1>
+        <h1 id="yyy">Gender: {{ gen }}</h1>
+        <h1 id="yyy">Age: {{ age }}</h1>
+  </div>
+
+{% endblock %}
