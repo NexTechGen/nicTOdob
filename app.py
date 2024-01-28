@@ -1,59 +1,79 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
+from datetime import date
 
 app = Flask(__name__)
 
 
+def calculateAge(birthDate):
+  today = date.today()
+  age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
+
+  return age
+
+
 def getMonth(days):
 
-  global mon, day
+  global mon, day, m_int
 
   if days <= 31:
     day = days
     mon = "Jan"
+    m_int = 1
 
   elif days <= 59:
     day = days - 32
     mon = "Feb"
+    m_int = 2
 
   elif days <= 90:
     day = days - 60
     mon = "Mar"
+    m_int = 3
 
   elif days <= 120:
     day = days - 91
     mon = "Apr"
+    m_int = 4
 
   elif days <= 151:
     day = days - 121
     mon = "May"
+    m_int = 5
 
   elif days <= 181:
     day = days - 152
     mon = "Jun"
+    m_int = 6
 
   elif days <= 212:
     day = days - 182
     mon = "Jul"
+    m_int = 7
 
   elif days <= 243:
     day = days - 213
     mon = "Arg"
+    m_int = 8
 
   elif days <= 273:
     day = days - 244
     mon = "Sep"
+    m_int = 9
 
   elif days <= 304:
     day = days - 273
     mon = "Oct"
+    m_int = 10
 
   elif days <= 334:
     day = days - 305
     mon = "Now"
+    m_int = 11
 
   elif days <= 365:
     day = days - 335
     mon = "Dec"
+    m_int = 12
 
   else:
     day = "Enter Valied NIC Number"
@@ -91,7 +111,7 @@ def fDob(nic):
   if (year or mon or day or gen) == "Enter Valied NIC Number":
     return "Enter Valied NIC Number"
   else:
-    dob = [year, mon, day, gen]
+    dob = [year, mon, day, gen, m_int]
     return dob
 
 
@@ -113,9 +133,11 @@ def passNic():
         if dob == "Enter Valied NIC Number":
           return render_template("errr.html", error="Enter Valied NIC Number")
         else:
-          year = f"{dob[0]}/{dob[1]}/{dob[2]}"
+          age = calculateAge(date(int(dob[0]), int(dob[4]), int(dob[2])))
+          year = f"{dob[0]}-{dob[1]}-{dob[2]}"
           gen = dob[3]
-          return render_template("otp.html", year = year, gen = gen)
+          #print(f"{age}")
+          return render_template("otp.html", year=year, gen=gen, age=age)
     else:
       return render_template("index.html")
   except:
